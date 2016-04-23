@@ -20,7 +20,7 @@ const htmlEmailTemplate = `
 {{.Parsed.Title}} by {{.Parsed.Author}}
 </p>
 <p>
-{{.Parsed.Content}}
+{{.RawContent}}
 </p>
 <p>
 source: <a href="{{.Parsed.URL}}">{{.Parsed.URL}}</a>
@@ -86,9 +86,11 @@ func ProcessEmail(config *Config, email *InboundEmail) error {
 	templVars := struct {
 		SourceEmail *InboundEmail
 		Parsed      *ReadabilityOutput
+		RawContent  template.HTML
 	}{
 		SourceEmail: email,
 		Parsed:      parsed,
+		RawContent:  template.HTML(parsed.Content),
 	}
 	plainBody.Execute(&outBuf, templVars)
 	resp.Body = outBuf.String()
