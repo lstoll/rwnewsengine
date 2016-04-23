@@ -20,6 +20,7 @@ type OutboundEmail struct {
 	Sender    string
 	Subject   string
 	Body      string
+	BodyHTML  string
 	InReplyTo string
 }
 

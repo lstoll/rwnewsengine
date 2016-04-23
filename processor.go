@@ -9,18 +9,35 @@ import (
 	"github.com/mvdan/xurls"
 )
 
-const emailTemplate = `
-{{.SourceEmail.StrippedText}},
-
---------------------------------------------------------------------------------
+const htmlEmailTemplate = `
+<html>
+<head /><body>
+<p>
+{{.SourceEmail.StrippedText}}
+</p>
+<hr/>
+<p>
 {{.Parsed.Title}} by {{.Parsed.Author}}
-
+</p>
+<p>
 {{.Parsed.Content}}
-
-source: {{.Parsed.URL}}
+</p>
+<p>
+source: <a href="{{.Parsed.URL}}">{{.Parsed.URL}}</a>
+</p>
+</body>
+</html>
 `
 
-var emailBody = template.Must(template.New("email").Parse(emailTemplate))
+// Just pass on the original. This sucks... but...
+const plainEmailTemplate = `
+{{.SourceEmail.BodyPlain}},
+`
+
+var (
+	htmlBody  = template.Must(template.New("htmlemail").Parse(htmlEmailTemplate))
+	plainBody = template.Must(template.New("plain").Parse(plainEmailTemplate))
+)
 
 func ProcessEmail(config *Config, email *InboundEmail) error {
 	resp := &OutboundEmail{}
@@ -73,7 +90,9 @@ func ProcessEmail(config *Config, email *InboundEmail) error {
 		SourceEmail: email,
 		Parsed:      parsed,
 	}
-	emailBody.Execute(&outBuf, templVars)
+	plainBody.Execute(&outBuf, templVars)
 	resp.Body = outBuf.String()
+	htmlBody.Execute(&outBuf, templVars)
+	resp.BodyHTML = outBuf.String()
 	return SendEmail(config, resp)
 }

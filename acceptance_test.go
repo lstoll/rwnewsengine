@@ -23,6 +23,7 @@ func TestErrything(t *testing.T) {
 		readabilityResponse *ReadabilityOutput
 		matchSubject        *regexp.Regexp
 		matchBody           *regexp.Regexp
+		matchHTMLBody       *regexp.Regexp
 		matchSender         *regexp.Regexp
 		matchRecipient      *regexp.Regexp
 	}{
@@ -40,7 +41,8 @@ func TestErrything(t *testing.T) {
 				Content: "Go 1.6 is released",
 			},
 			matchSubject:   regexp.MustCompile("Go 1.6 has been released, or so it seems"),
-			matchBody:      regexp.MustCompile("Go 1.6 is released"),
+			matchBody:      regexp.MustCompile("This is an email from the past"),
+			matchHTMLBody:  regexp.MustCompile("Go 1.6 is released"),
 			matchSender:    regexp.MustCompile(`lincoln.stoll@gmail.com`),
 			matchRecipient: regexp.MustCompile("group@google.com"),
 		},
@@ -59,7 +61,8 @@ func TestErrything(t *testing.T) {
 				Content: "Go 1.4 is released",
 			},
 			matchSubject:   regexp.MustCompile("Go 1.4 Release"),
-			matchBody:      regexp.MustCompile("Go 1.4 is released"),
+			matchBody:      regexp.MustCompile("https://blog.golang.org/go1.4"),
+			matchHTMLBody:  regexp.MustCompile("Go 1.4 is released"),
 			matchSender:    regexp.MustCompile(`lincoln.stoll@gmail.com`),
 			matchRecipient: regexp.MustCompile("group@google.com"),
 		},
@@ -149,8 +152,12 @@ func TestErrything(t *testing.T) {
 			fatalf("Outgoing subject %q does not match %q", sentEmail.Subject, tc.matchSubject)
 		}
 		if tc.matchBody != nil && !tc.matchBody.MatchString(sentEmail.Body) {
-			fatalf("Outgoing body %q does not match %q", sentEmail.Body, tc.matchBody)
+			fatalf("Outgoing plain body %q does not match %q", sentEmail.Body, tc.matchBody)
 		}
+		if tc.matchHTMLBody != nil && !tc.matchHTMLBody.MatchString(sentEmail.BodyHTML) {
+			fatalf("Outgoing html body %q does not match %q", sentEmail.BodyHTML, tc.matchHTMLBody)
+		}
+
 		if tc.matchSender != nil && !tc.matchSender.MatchString(sentEmail.Sender) {
 			fatalf("Outgoing sender %q does not match %q", sentEmail.Sender, tc.matchSender)
 		}
