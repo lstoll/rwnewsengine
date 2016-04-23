@@ -84,7 +84,7 @@ func TestErrything(t *testing.T) {
 
 		// Load the fixture if not explicit
 		if tc.inboundBody == nil {
-			data, err := ioutil.ReadFile(fmt.Sprintf("fixtures/email/%d.formdata", idx))
+			data, err := ioutil.ReadFile(fmt.Sprintf("testdata/email/%d.formdata", idx))
 			if err != nil {
 				fatal("Error loading fixture from disk", err)
 			}
