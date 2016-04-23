@@ -1,0 +1,42 @@
+{
+        "comment": "",
+        "ignore": "test",
+        "rootPath": "github.com/lstoll/rwnewsengine",
+        "heroku": {
+                "install" : [ "./..." ],
+                "goVersion": "go1.6"
+        },
+	"package": [
+		{
+			"checksumSHA1": "FfjBYHP43DSIKbPiC7zKxOd71WA=",
+			"path": "github.com/Sirupsen/logrus",
+			"revision": "8bca2664072173a3c71db4c28ca8d304079b1787",
+			"revisionTime": "2015-07-28T12:10:54Z"
+		},
+		{
+			"checksumSHA1": "I4E+5EwgKBOtoFtVSiarbPyWDeg=",
+			"path": "github.com/mailgun/mailgun-go",
+			"revision": "01bd6a648bb5d95d5f6ebd190fee8bb4158d0339",
+			"revisionTime": "2014-12-25T18:17:53Z"
+		},
+		{
+			"checksumSHA1": "RVJJhY2mMMg2gZL+oMoZ8Mihtcg=",
+			"path": "github.com/mbanzon/simplehttp",
+			"revision": "5d9086754452916507020a71df04f0b0026c0c94",
+			"revisionTime": "2016-03-22T23:17:57Z"
+		},
+		{
+			"checksumSHA1": "igNiT0BRALYd2/f9q8XTd4TlcGw=",
+			"path": "github.com/mvdan/xurls",
+			"revision": "3682b4ddf675e54ab781aca21deb4cb11cb7a4af",
+			"revisionTime": "2016-04-23T00:47:05Z"
+		},
+		{
+			"checksumSHA1": "JM5JaFjNWdB5RW+XlaDxO8ueNF8=",
+			"path": "go.pedge.io/env",
+			"revision": "7e2afbc4865e7895f8786bfb72eacc3629dfde7d",
+			"revisionTime": "2016-03-25T14:56:55Z"
+		}
+	],
+	"rootPath": "github.com/lstoll/rwnewsengine"
+}
